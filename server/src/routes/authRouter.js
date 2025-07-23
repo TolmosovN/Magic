@@ -4,7 +4,8 @@ const authRouter = require('express').Router();
 
 authRouter.post('/signup', AuthController.signup);
 
-authRouter.get('/refresh', AuthController.refresh);
+authRouter.post('/refresh', AuthController.refresh);
+authRouter.post('/signin', AuthController.signin);
 
 authRouter.delete('/signout', AuthController.signout);
 

@@ -12,6 +12,10 @@ function App() {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
   };
+    const handleLogin = async (formData) => {
+      const response = await axiosInstance.post("/auth/signin", formData);
+      setUser(response.data.user);
+    };
 
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
@@ -26,7 +30,10 @@ function App() {
           path="/signup"
           element={<SignupPage signupHandler={signupHandler} />}
         />
-        <Route path="/signin" element={<SignInPage />} />
+        <Route
+          path="/signin"
+          element={<SignInPage handleLogin={handleLogin} />}
+        />
         {/* <Route path="/" element={<MainPage />} /> */}
       </Route>
     </Routes>
