@@ -1,0 +1,48 @@
+const jwtConfig = require('../config/jwtConfig');
+const AuthService = require('../services/authService');
+const generateTokens = require('../utils/generateTokens');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+class AuthController {
+  static async signup(req, res) {
+    try {
+      const { name, email, password } = req.body;
+      const user = await AuthService.signup({ name, email, password });
+      const { refreshToken } = generateTokens({ user });
+      res
+        .cookie('refreshToken', refreshToken, {
+          maxAge: jwtConfig.refresh.expiresIn,
+          httpOnly: true,
+        })
+        .json({ user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static refresh(req, res) {
+    try {
+      const { refreshToken } = req.cookies;
+      console.log(refreshToken);
+      const { user } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      const { refreshToken: newRefreshToken, accessToken } = generateTokens({ user });
+      res
+        .cookie('refreshToken', newRefreshToken, {
+          maxAge: jwtConfig.refresh.expiresIn,
+          httpOnly: true,
+        })
+        .json({ user, accessToken });
+    } catch (error) {
+      console.log(error);
+      res.status(401).json({ message: error.message });
+    }
+  }
+
+  static signout(req, res) {
+    res.clearCookie('refreshToken').sendStatus(204);
+  }
+}
+
+module.exports = AuthController;

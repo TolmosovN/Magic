@@ -1,27 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
-import {  useNavigate } from "react-router";
 
-export default function SignupPage() {
-  const { user, setUser } = useState(null);
-  const navigate = useNavigate();
+export default function SignupPage({ signupHandler }) {
   const [error, setError] = useState(null);
-
-  const signupHandler = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    try {
-        const res = await axios.post('api/auth/signup', data);
-        setUser(res.data.user);
-        navigate('/');
-    } catch (error) {
-        setError(error.response?.data?.message || "Ошибка регистрации");
-        
-    }
-  }
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    city: "",
+  });
 
   return (
     <Container>
@@ -30,13 +17,21 @@ export default function SignupPage() {
           <h2>Регистрация</h2>
 
           {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={signupHandler}>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              signupHandler(formData);
+            }}
+          >
             <Form.Group>
               <Form.Label>Имя пользователя</Form.Label>
               <Form.Control
                 name="name"
                 type="text"
                 placeholder="Введите имя"
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
                 required
               />
             </Form.Group>
@@ -47,6 +42,9 @@ export default function SignupPage() {
                 type="text"
                 placeholder="Введите ваш город"
                 required
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, city: e.target.value }))
+                }
               />
             </Form.Group>
             <Form.Group>
@@ -56,6 +54,9 @@ export default function SignupPage() {
                 type="email"
                 placeholder="Введите email"
                 required
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                }
               />
             </Form.Group>
             <Form.Group>
@@ -65,9 +66,14 @@ export default function SignupPage() {
                 type="password"
                 placeholder="Введите пароль"
                 required
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, password: e.target.value }))
+                }
               />
             </Form.Group>
-            <Button variant="primary" type="submit">Зарегистрироваться</Button>
+            <Button variant="primary" type="submit">
+              Зарегистрироваться
+            </Button>
           </Form>
         </Card.Body>
       </Card>
