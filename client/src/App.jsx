@@ -1,18 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router";
-import Layout from "./components/pages/Layout1";
-import SignupPage from "./components/pages/SignupPage";
+import { Route, Routes, useNavigate } from "react-router";
+import axios from "axios";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/register" element={<SignupPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <Routes>
+      <Route
+        element={<Layout user={user}  />}
+      ></Route>
+      <Route path="/profile" element={<ProfilePage user={user} />} />
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="/register" element={<SignupPage />} />
+      <Route
+        path="/signin"
+        element={<SignInPage  />}
+      />
+      <Route path="/" element={<MainPage />} />
+    </Routes>
   );
 }
 
