@@ -151,7 +151,7 @@ export default function ProfilePage({user}) {
                     </div>
                     <div>
                       <p className="text-muted mb-0">Город</p>
-                      <h5 className="mb-0">{mockUser.city}</h5>
+                      <h5 className="mb-0">{user.city}</h5>
                     </div>
                   </div>
                 </Card.Body>
@@ -178,7 +178,7 @@ export default function ProfilePage({user}) {
                   <Form.Group>
                     <Form.Label>Имя</Form.Label>
                     <Form.Control 
-                      value={mockUser.name}
+                      value={user.name}
                       disabled={!isEditing}
                       readOnly={!isEditing}
                     />
@@ -188,7 +188,7 @@ export default function ProfilePage({user}) {
                   <Form.Group>
                     <Form.Label>Email</Form.Label>
                     <Form.Control 
-                      value={mockUser.email}
+                      value={user.email}
                       disabled={!isEditing}
                       readOnly={!isEditing}
                     />
@@ -208,7 +208,7 @@ export default function ProfilePage({user}) {
                   <Form.Group>
                     <Form.Label>Город</Form.Label>
                     <Form.Select disabled={!isEditing}>
-                      <option>{mockUser.city}</option>
+                      <option>{user.city}</option>
                       {cities.map(city => (
                         <option key={city} value={city}>{city}</option>
                       ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../ui/Navbar";
+import NavBar from "../ui/Navbar1";
 import { Outlet } from "react-router";
 import Container from "react-bootstrap/esm/Container";
 

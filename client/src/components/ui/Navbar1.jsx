@@ -8,9 +8,11 @@ export default function Navbar({ user, logoutHandler }) {
     <header>
       <h1>MAGIC CARDs</h1>
       <nav>
-        <Link to="/register">Регистрация</Link>
-        <Link to="/user">Войти</Link>
+        <Link to="/signup">Регистрация</Link>
+        
+        <Link to="/signin">Войти</Link>
         <Link to="/">HOME</Link>
+        <Link to="/profile">профиль</Link>
       </nav>
     </header>
   );
