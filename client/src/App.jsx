@@ -4,7 +4,7 @@ import Layout from "./components/pages/Layout";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
-import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
+// import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import ProfilePage from "./components/pages/ProfilePage";
@@ -19,7 +19,7 @@ function App() {
 
   const [accessToken, setAccessToken] = useState("");
     const [mtgcards, setMtgcards] = useState([]);
-  const [cart, setCart] = useState([]);
+ 
 
   useEffect(() => {
     axios("/api/cards")
@@ -38,6 +38,7 @@ function App() {
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
+    navigate("/");
   };
 
   const handleLogin = async (formData) => {
@@ -75,10 +76,9 @@ function App() {
     setMtgcards([...mtgcards, res.data]);
     navigate("/profile");
   };
-  const addToCart = (item) => setCart((prev) => [...prev, item]);
-  const removeFromCart = (id) =>
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  const onOrderComplete = () => setCart([]);
+  
+
+
 
   return (
     <Routes>
