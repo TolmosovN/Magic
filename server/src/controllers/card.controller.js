@@ -10,6 +10,15 @@ class CardController {
       res.status(500).json({ message: 'Ошибка при получении карточек' });
     }
   }
+
+  static async createCard(req, res) {
+    try {
+      const newCard = await CardService.create(req.body);
+      res.json(newCard);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
 }
 
 module.exports = CardController;

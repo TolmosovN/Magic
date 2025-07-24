@@ -2,7 +2,7 @@ import { NavDropdown } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 
 export default function NavbarComponent({ user, logoutHandler, cart }) {
   return (
@@ -70,29 +70,3 @@ export default function NavbarComponent({ user, logoutHandler, cart }) {
 //   );
 // }
 
-// import React from "react";
-// import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
-// import { FaUser, FaShoppingCart } from "react-icons/fa";
-
-// export default function Navbar() {
-//   return (
-//     <Navbar bg="light">
-//       <Container>
-//         <Navbar.Brand href="/">MTG Market</Navbar.Brand>
-
-//         <Form inline>
-//           <FormControl type="text" placeholder="Поиск" />
-//         </Form>
-
-//         <Nav>
-//           <Nav.Link href="/profile">
-//             <FaUser />
-//           </Nav.Link>
-//           <Nav.Link href="/cart">
-//             <FaShoppingCart />
-//           </Nav.Link>
-//         </Nav>
-//       </Container>
-//     </Navbar>
-//   );
-// }

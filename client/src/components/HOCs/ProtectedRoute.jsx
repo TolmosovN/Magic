@@ -6,6 +6,6 @@ export default function ProtectedRoute({
   isAllowed,
   redirectTo = "/",
 }) {
-  if (!isAllowed) return <Navigate to={redirectTo} />;
+  if (!isAllowed) return <Navigate to={redirectTo} replace />;
   return children ?? <Outlet />;
 }
