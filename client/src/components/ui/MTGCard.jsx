@@ -1,8 +1,14 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
-export default function MTGCard({ mtgcard }) {
+export default function MTGCard({ mtgcard, addToCart }) {
   const { name, image_url, price, condition, isSold, seller } = mtgcard;
+
+  const handleAddToCart = () => {
+    if (!isSold && addToCart) {
+      addToCart(mtgcard);
+    }
+  };
 
   return (
     <Card style={{ width: "20rem", margin: "1rem" }}>
@@ -47,7 +53,9 @@ export default function MTGCard({ mtgcard }) {
             Продано
           </Button>
         ) : (
-          <Button variant="primary">Добавить в корзину</Button>
+          <Button variant="primary" onClick={handleAddToCart}>
+            Добавить в корзину
+          </Button>
         )}
       </Card.Body>
     </Card>
