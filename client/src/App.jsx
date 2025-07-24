@@ -1,21 +1,21 @@
 import { Route, Routes } from "react-router";
 
-import Layout from "./components/pages/Layout1";
+import Layout from "./components/колинлайоут";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import axiosInstance from "./service/axiosInstance";
 import { useState } from "react";
-
+import MainPage from "./components/pages/MainPage";
 function App() {
   const [user, setUser] = useState(null);
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
   };
-    const handleLogin = async (formData) => {
-      const response = await axiosInstance.post("/auth/signin", formData);
-      setUser(response.data.user);
-    };
+  const handleLogin = async (formData) => {
+    const response = await axiosInstance.post("/auth/signin", formData);
+    setUser(response.data.user);
+  };
 
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
@@ -34,7 +34,7 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        {/* <Route path="/" element={<MainPage />} /> */}
+        <Route path="/" element={<MainPage />} />
       </Route>
     </Routes>
   );
