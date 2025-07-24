@@ -26,12 +26,13 @@ import {
   Upload
 } from 'react-bootstrap-icons'
 import  { useState } from 'react';
-export default function ProfilePage({user}) {
+export default function ProfilePage({user, submitHandler}) {
+console.log(submitHandler);
 
   
   const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
-  const [showAddCard, setShowAddCard] = useState(false);
+  const [showAddCard, setShowAddCard] = useState(true);
 
   // Mock data
   const mockUser = {
@@ -64,7 +65,7 @@ export default function ProfilePage({user}) {
   ];
 
   const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург'];
-  const conditions = ['NM', 'SP', 'MP', 'HP', 'D'];
+  const conditions = ['отличное', 'SP', 'MP', 'HP', 'D'];
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -93,71 +94,7 @@ export default function ProfilePage({user}) {
         <Tab eventKey="overview" title={
           <span><Person className="me-1" /> Обзор</span>
         }>
-          <Row className="g-3 mb-4">
-            <Col md={6} lg={3}>
-              <Card className="h-100">
-                <Card.Body>
-                  <div className="d-flex align-items-center">
-                    <div className="p-2 bg-success bg-opacity-10 rounded me-3">
-                      <Box className="text-success" size={24} />
-                    </div>
-                    <div>
-                      <p className="text-muted mb-0">Продано</p>
-                      <h4 className="mb-0">{mockUser.totalSales}</h4>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col md={6} lg={3}>
-              <Card className="h-100">
-                <Card.Body>
-                  <div className="d-flex align-items-center">
-                    <div className="p-2 bg-primary bg-opacity-10 rounded me-3">
-                      <Bag className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <p className="text-muted mb-0">Куплено</p>
-                      <h4 className="mb-0">{mockUser.totalPurchases}</h4>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col md={6} lg={3}>
-              <Card className="h-100">
-                <Card.Body>
-                  <div className="d-flex align-items-center">
-                    <div className="p-2 bg-warning bg-opacity-10 rounded me-3">
-                      <Person className="text-warning" size={24} />
-                    </div>
-                    <div>
-                      <p className="text-muted mb-0">Рейтинг</p>
-                      <h4 className="mb-0">{mockUser.rating}</h4>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col md={6} lg={3}>
-              <Card className="h-100">
-                <Card.Body>
-                  <div className="d-flex align-items-center">
-                    <div className="p-2 bg-info bg-opacity-10 rounded me-3">
-                      <i className="bi bi-geo-alt text-info"></i>
-                    </div>
-                    <div>
-                      <p className="text-muted mb-0">Город</p>
-                      <h5 className="mb-0">{user.city}</h5>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+         
 
           {/* Profile Info */}
           <Card className="mb-4">
@@ -196,24 +133,16 @@ export default function ProfilePage({user}) {
                 </Col>
                 <Col md={6}>
                   <Form.Group>
-                    <Form.Label>Телефон</Form.Label>
+                    <Form.Label>Город</Form.Label>
                     <Form.Control 
-                      value={mockUser.phone}
+                      value={user.city}
                       disabled={!isEditing}
                       readOnly={!isEditing}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
-                  <Form.Group>
-                    <Form.Label>Город</Form.Label>
-                    <Form.Select disabled={!isEditing}>
-                      <option>{user.city}</option>
-                      {cities.map(city => (
-                        <option key={city} value={city}>{city}</option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
+                  
                 </Col>
               </Row>
             </Card.Body>
@@ -273,31 +202,30 @@ export default function ProfilePage({user}) {
             </Card.Body>
           </Card>
 
-          {/* Add Card Form */}
           {showAddCard && (
             <Card className="mb-4">
               <Card.Header>
                 <Card.Title>Добавить новую карту</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+                <Form  onSubmit={()=>submitHandler()}>
                   <Row className="g-3 mb-3">
                     <Col md={6}>
                       <Form.Group>
                         <Form.Label>Название карты</Form.Label>
-                        <Form.Control placeholder="Введите название карты" />
+                        <Form.Control placeholder="Введите название карты" name='name'/>
                       </Form.Group>
                     </Col>
                     <Col md={6}>
                       <Form.Group>
                         <Form.Label>Цена (₽)</Form.Label>
-                        <Form.Control type="number" placeholder="0" />
+                        <Form.Control type="number" placeholder="0" name='price'/>
                       </Form.Group>
                     </Col>
                     <Col md={6}>
                       <Form.Group>
                         <Form.Label>Состояние</Form.Label>
-                        <Form.Select>
+                        <Form.Select >
                           <option>Выберите состояние</option>
                           {conditions.map(condition => (
                             <option key={condition} value={condition}>{condition}</option>
@@ -307,25 +235,19 @@ export default function ProfilePage({user}) {
                     </Col>
                     <Col md={6}>
                       <Form.Group>
-                        <Form.Label>Изображение</Form.Label>
-                        <div className="d-grid">
-                          <Button variant="outline-secondary">
-                            <Upload className="me-1" />
-                            Загрузить изображение
-                          </Button>
-                        </div>
+                        <Form.Label>Изображение карты</Form.Label>
+                        <Form.Control placeholder="Вставьте ссылку на изображение" name='image_url' />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Form.Group className="mb-3">
                     <Form.Label>Описание (опционально)</Form.Label>
-                    <Form.Control as="textarea" rows={3} placeholder="Дополнительная информация о карте..." />
+                    <Form.Control as="textarea" rows={3} placeholder="Дополнительная информация о карте..." name='image_url' />
                   </Form.Group>
                   <div className="d-flex gap-2">
-                    <Button className="flex-grow-1">Добавить карту</Button>
+                    <Button className="flex-grow-1" type='submit'>Добавить карту</Button>
                     <Button 
-                      variant="outline-secondary"
-                      onClick={() => setShowAddCard(false)}
+                      type='submit'
                     >
                       Отмена
                     </Button>
@@ -334,40 +256,6 @@ export default function ProfilePage({user}) {
               </Card.Body>
             </Card>
           )}
-        </Tab>
-
-        <Tab eventKey="orders" title={
-          <span><Bag className="me-1" /> Заказы</span>
-        }>
-          <Card>
-            <Card.Header>
-              <Card.Title>История заказов</Card.Title>
-            </Card.Header>
-            <Card.Body className="text-center py-5">
-              <Bag size={48} className="text-muted mb-3" />
-              <h3 className="mb-2">Заказов пока нет</h3>
-              <p className="text-muted">
-                Здесь будет отображаться история ваших покупок
-              </p>
-            </Card.Body>
-          </Card>
-        </Tab>
-
-        <Tab eventKey="settings" title={
-          <span><Gear className="me-1" /> Настройки</span>
-        }>
-          <Card>
-            <Card.Header>
-              <Card.Title>Настройки аккаунта</Card.Title>
-            </Card.Header>
-            <Card.Body className="text-center py-5">
-              <Gear size={48} className="text-muted mb-3" />
-              <h3 className="mb-2">Настройки</h3>
-              <p className="text-muted">
-                Здесь будут доступны настройки уведомлений, безопасности и т.д.
-              </p>
-            </Card.Body>
-          </Card>
         </Tab>
       </Tabs>
     </Container>

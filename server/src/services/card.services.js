@@ -1,4 +1,4 @@
-const { Card, User } = require('../../db/models');
+const { Card, User, Cart  } = require('../../db/models');
 
 class CardsService {
   static getAllCards() {
@@ -11,10 +11,9 @@ class CardsService {
     });
   }
 
-  static async create(data, artistId) {
-    const track = await Card.create(data);
-    await Cart.create({ cardkId: track.id, artistId });
-    return track;
+  static async create(data) {
+    const card = await Card.create(data);
+    return card;
   }
 
 }

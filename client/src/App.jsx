@@ -27,8 +27,10 @@ function App() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log('111');
+    
     const data = Object.fromEntries(new FormData(e.target));
-    const userIdData = { ...data, userId: user.id };
+    const userIdData = { ...data, userId: user.id , isSold: false};
     const res = await axiosInstance.post("/cards", userIdData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -41,7 +43,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-        <Route path="/profile" element={<ProfilePage user={user} />} />
+        <Route path="/profile" element={<ProfilePage user={user} submitHandler={submitHandler}/>} />
         {/* <Route path="/cart" element={<CartPage />} /> */}
         <Route
           path="/signup"

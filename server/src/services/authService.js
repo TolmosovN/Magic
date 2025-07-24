@@ -22,7 +22,7 @@ class AuthService {
 
   static async signin(email, password) {
     const userExisting = await User.findOne({ where: { email } });
-    if (userExisting) throw new Error('User уже существует');
+    if (!userExisting) throw new Error('User уже существует');
     const truePassword = await bcrypt.compare(password, userExisting.password);
     if (!truePassword) throw new Error('Пароль не правильный');
     const plainUser = userExisting.get();
