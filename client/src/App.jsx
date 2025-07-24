@@ -19,11 +19,7 @@ function App() {
     const response = await axiosInstance.post("/auth/signin", formData);
     setUser(response.data.user);
   };
-  const handleLogin = async (formData) => {
-    const response = await axiosInstance.post("/auth/signin", formData);
-    setUser(response.data.user);
-  };
-
+  
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
     setUser(null);
@@ -32,7 +28,7 @@ function App() {
   const submitHandler = async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
-    const userIdData ={...data, userId: user.id };
+    const userIdData = { ...data, userId: user.id };
     const res = await axiosInstance.post("/cards", userIdData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -40,15 +36,13 @@ function App() {
     });
     setCards([...cards, res.data]);
     navigate("/profile");
-  }
-
-
+  };
 
   return (
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
         <Route path="/profile" element={<ProfilePage user={user} />} />
-      {/* <Route path="/cart" element={<CartPage />} /> */}
+        {/* <Route path="/cart" element={<CartPage />} /> */}
         <Route
           path="/signup"
           element={<SignupPage signupHandler={signupHandler} />}
