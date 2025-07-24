@@ -72,7 +72,7 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        <Route path="/" element={<MainPage  mtgcards={mtgcards}/>} />
+        <Route path="/" element={<MainPage  mtgcards={mtgcards} setMtgcards={setMtgcards}/>} />
       </Route>
     </Routes>
   );

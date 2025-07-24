@@ -28,7 +28,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Card from '../ui/Card'; // твой компонент карточки
 import SearchForm from '../ui/SearchForm';
 
-export default function MainPage({mtgcards}) {
+export default function MainPage({mtgcards, setMtgcards}) {
 
   useEffect(() => {
     axios('/api/')
