@@ -23,7 +23,7 @@ function App() {
   };
   return (
     <Routes>
-      <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
+      <Route path='/' element={<Layout user={user} logoutHandler={logoutHandler} />}>
         {/* <Route path="/profile" element={<ProfilePage user={user} />} />
       <Route path="/cart" element={<CartPage />} /> */}
         <Route
