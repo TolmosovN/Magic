@@ -10,6 +10,13 @@ class CardsService {
       },
     });
   }
+
+  static async create(data, artistId) {
+    const track = await Card.create(data);
+    await Cart.create({ cardkId: track.id, artistId });
+    return track;
+  }
+
 }
 
 module.exports = CardsService;
