@@ -62,10 +62,8 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        <Route 
-        path="/search"/>
-          
         
+          
         { <Route path="/" element={<MainPage />} /> }
       </Route>
     </Routes>
