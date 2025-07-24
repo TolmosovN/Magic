@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Container, Row, Col } from "react-bootstrap";
-import MTGCard from "../ui/MTGCard";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Container, Row, Col } from 'react-bootstrap';
+import MTGCard from '../ui/MTGCard';
+import SearchForm from '../ui/SearchForm';
 
-export default function MainPage({ addToCart }) {
-  const [mtgcards, setMtgcards] = useState([]);
+export default function MainPage({mtgcards, setMtgcards}) {
 
   useEffect(() => {
     axios("/api/cards")
@@ -15,6 +15,9 @@ export default function MainPage({ addToCart }) {
   return (
     <Container className="my-4">
       <h1 className="mb-4">Каталог карт</h1>
+      <Container style={{ marginBottom: '5px', border: '2px' }}>
+        <SearchForm cards={mtgcards} setCards={setMtgcards} />
+      </Container>
       <Row xs={1} md={2} lg={3} className="g-4">
         {mtgcards.map((card) => (
           <Col key={card.id}>

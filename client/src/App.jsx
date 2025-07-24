@@ -9,12 +9,19 @@ import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import ProfilePage from "./components/pages/ProfilePage";
 
+import axios from "axios";
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
 
   const [accessToken, setAccessToken] = useState("");
-  const [cards, setCards] = useState([]);
+    const [mtgcards, setMtgcards] = useState([]);
+
+  useEffect(() => {
+    axios("/api/cards")
+      .then(({ data }) => setMtgcards(data))
+      .catch(console.error);
+  }, []);
   const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,14 +57,17 @@ function App() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log('111');
+    
     const data = Object.fromEntries(new FormData(e.target));
-    const userIdData = { ...data, userId: user.id };
+    const userIdData = { ...data, userId: user.id , isSold: false};
     const res = await axiosInstance.post("/cards", userIdData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    setCards([...cards, res.data]);
+    e.target.reset();
+    setMtgcards([...mtgcards, res.data]);
     navigate("/profile");
   };
 

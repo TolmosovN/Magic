@@ -1,4 +1,4 @@
-const { Card, User } = require('../../db/models');
+const { Card, User, Cart  } = require('../../db/models');
 
 class CardsService {
   static getAllCards() {
@@ -9,6 +9,11 @@ class CardsService {
         attributes: ['city'],
       },
     });
+  }
+
+  static async create(data) {
+    const card = await Card.create(data);
+    return card;
   }
 
 }
