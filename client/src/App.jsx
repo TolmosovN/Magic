@@ -6,10 +6,17 @@ import SignupPage from "./components/pages/SignupPage";
 import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import MainPage from "./components/pages/MainPage";
+import axios from "axios";
 function App() {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState("");
-  const [cards, setCards] = useState([]);
+    const [mtgcards, setMtgcards] = useState([]);
+
+  useEffect(() => {
+    axios("/api/cards")
+      .then(({ data }) => setMtgcards(data))
+      .catch(console.error);
+  }, []);
   const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,21 +45,24 @@ function App() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log('111');
+    
     const data = Object.fromEntries(new FormData(e.target));
-    const userIdData = { ...data, userId: user.id };
+    const userIdData = { ...data, userId: user.id , isSold: false};
     const res = await axiosInstance.post("/cards", userIdData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    setCards([...cards, res.data]);
+    e.target.reset();
+    setMtgcards([...mtgcards, res.data]);
     navigate("/profile");
   };
 
   return (
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-        <Route path="/profile" element={<ProfilePage user={user} />} />
+        <Route path="/profile" element={<ProfilePage user={user} mtgcards={mtgcards} submitHandler={submitHandler}/>} />
         {/* <Route path="/cart" element={<CartPage />} /> */}
         <Route
           path="/signup"
@@ -62,9 +72,7 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        
-          
-        { <Route path="/" element={<MainPage />} /> }
+        <Route path="/" element={<MainPage  mtgcards={mtgcards} setMtgcards={setMtgcards}/>} />
       </Route>
     </Routes>
   );
