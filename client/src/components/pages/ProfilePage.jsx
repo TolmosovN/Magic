@@ -1,24 +1,23 @@
-
-import React from 'react'
-import { 
-  Container, 
-  Tab, 
-  Tabs, 
-  Card, 
-  Button, 
-  Form, 
-  Row, 
-  Col, 
+import React from "react";
+import {
+  Container,
+  Tab,
+  Tabs,
+  Card,
+  Button,
+  Form,
+  Row,
+  Col,
   Badge,
   Image,
   ListGroup,
   InputGroup,
-  FormControl
-} from 'react-bootstrap';
+  FormControl,
+} from "react-bootstrap";
 import {
-  Person, 
-  Box, 
-  Bag, 
+  Person,
+  Box,
+  Bag,
   Gear,
   Pencil,
   Plus,
@@ -36,43 +35,49 @@ console.log(submitHandler);
 
   // Mock data
   const mockUser = {
-    name: 'Иван Иванов',
-    email: 'ivan@example.com',
-    phone: '+7 (999) 123-45-67',
-    city: 'Москва',
+    name: "Иван Иванов",
+    email: "ivan@example.com",
+    phone: "+7 (999) 123-45-67",
+    city: "Москва",
     totalSales: 42,
     totalPurchases: 15,
-    rating: 4.8
+    rating: 4.8,
   };
 
   const mockSellerCards = [
     {
       id: 1,
-      name: 'Black Lotus',
+      name: "Black Lotus",
       price: 25000,
-      status: 'Продается',
+      status: "Продается",
       views: 128,
-      image: 'https://cards.scryfall.io/large/front/0/c/0c082aa8-bf7f-47f2-baf8-43ad253fd7d7.jpg'
+      image:
+        "https://cards.scryfall.io/large/front/0/c/0c082aa8-bf7f-47f2-baf8-43ad253fd7d7.jpg",
     },
     {
       id: 2,
-      name: 'Mox Pearl',
+      name: "Mox Pearl",
       price: 18000,
-      status: 'Продано',
+      status: "Продано",
       views: 95,
-      image: 'https://cards.scryfall.io/large/front/3/b/3b0c5b5c-2a1e-4e6d-b5e1-9b58b3a5e5d1.jpg'
-    }
+      image:
+        "https://cards.scryfall.io/large/front/3/b/3b0c5b5c-2a1e-4e6d-b5e1-9b58b3a5e5d1.jpg",
+    },
   ];
 
   const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург'];
   const conditions = ['отличное', 'SP', 'MP', 'HP', 'D'];
 
   const getStatusColor = (status) => {
-    switch(status) {
-      case 'Продается': return 'success';
-      case 'Продано': return 'secondary';
-      case 'Забронировано': return 'warning';
-      default: return 'primary';
+    switch (status) {
+      case "Продается":
+        return "success";
+      case "Продано":
+        return "secondary";
+      case "Забронировано":
+        return "warning";
+      default:
+        return "primary";
     }
   };
 
@@ -81,9 +86,7 @@ console.log(submitHandler);
       {/* Header */}
       <div className="mb-4">
         <h1 className="mb-2">Личный кабинет</h1>
-        <p className="text-muted">
-          Управляйте своим профилем и товарами
-        </p>
+        <p className="text-muted">Управляйте своим профилем и товарами</p>
       </div>
 
       <Tabs
@@ -106,7 +109,7 @@ console.log(submitHandler);
                 onClick={() => setIsEditing(!isEditing)}
               >
                 <Pencil className="me-1" />
-                {isEditing ? 'Сохранить' : 'Редактировать'}
+                {isEditing ? "Сохранить" : "Редактировать"}
               </Button>
             </Card.Header>
             <Card.Body>
@@ -149,9 +152,14 @@ console.log(submitHandler);
           </Card>
         </Tab>
 
-        <Tab eventKey="my-cards" title={
-          <span><Box className="me-1" /> Мои карты</span>
-        }>
+        <Tab
+          eventKey="my-cards"
+          title={
+            <span>
+              <Box className="me-1" /> Мои карты
+            </span>
+          }
+        >
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
               <Card.Title className="mb-0">Мои карты</Card.Title>
@@ -162,12 +170,12 @@ console.log(submitHandler);
             </Card.Header>
             <Card.Body>
               <Row className="g-3">
-                {mockSellerCards.map(card => (
+                {mockSellerCards.map((card) => (
                   <Col md={6} lg={4} key={card.id}>
                     <Card className="h-100">
                       <div className="ratio ratio-1x1 bg-light p-2">
-                        <Image 
-                          src={card.image} 
+                        <Image
+                          src={card.image}
                           alt={card.name}
                           className="object-fit-contain"
                         />
@@ -186,7 +194,10 @@ console.log(submitHandler);
                           Просмотров: {card.views}
                         </p>
                         <div className="d-grid gap-2 d-sm-flex">
-                          <Button variant="outline-primary" className="flex-grow-1">
+                          <Button
+                            variant="outline-primary"
+                            className="flex-grow-1"
+                          >
                             <Pencil className="me-1" />
                             Изменить
                           </Button>
@@ -227,8 +238,10 @@ console.log(submitHandler);
                         <Form.Label>Состояние</Form.Label>
                         <Form.Select >
                           <option>Выберите состояние</option>
-                          {conditions.map(condition => (
-                            <option key={condition} value={condition}>{condition}</option>
+                          {conditions.map((condition) => (
+                            <option key={condition} value={condition}>
+                              {condition}
+                            </option>
                           ))}
                         </Form.Select>
                       </Form.Group>
@@ -251,6 +264,7 @@ console.log(submitHandler);
                     >
                       Отмена
                     </Button>
+                    <Button type="submit">Отмена</Button>
                   </div>
                 </Form>
               </Card.Body>

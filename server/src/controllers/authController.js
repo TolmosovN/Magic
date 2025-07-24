@@ -8,8 +8,8 @@ require('dotenv').config();
 class AuthController {
   static async signup(req, res) {
     try {
-      const { name, email, password } = req.body;
-      const user = await AuthService.signup({ name, email, password });
+      const { name, email, password, city } = req.body;
+      const user = await AuthService.signup({ name, email, password, city });
       const { refreshToken } = generateTokens({ user });
       res
         .cookie('refreshToken', refreshToken, {

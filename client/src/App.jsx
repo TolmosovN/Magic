@@ -4,20 +4,31 @@ import ProfilePage from "./components/pages/ProfilePage";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import axiosInstance from "./service/axiosInstance";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainPage from "./components/pages/MainPage";
 function App() {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState("");
   const [cards, setCards] = useState([]);
   const navigate = useNavigate();
+
+    useEffect(() => {
+      axiosInstance
+        .post("/auth/refresh")
+        .then(({ data }) => setUser(data.user))
+        .catch(console.error)
+        // .finally(() => setLoading(false));
+    }, []);
+
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
+    navigate("/");
   };
   const handleLogin = async (formData) => {
     const response = await axiosInstance.post("/auth/signin", formData);
     setUser(response.data.user);
+    navigate("/");
   };
   
   const logoutHandler = async () => {
