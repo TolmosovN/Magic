@@ -74,8 +74,8 @@ function App() {
   return (
   <Routes>
     <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-      <Route path="/" element={<MainPage addToCart={addToCart}/>} />
-      <Route path="/profile" element={<ProfilePage user={user} />} />
+      <Route path="/" element={<MainPage addToCart={addToCart} mtgcards={mtgcards} setMtgcards={setMtgcards}/>} />
+      <Route path="/profile" element={<ProfilePage user={user} submitHandler={submitHandler} mtgcards={mtgcards} />} />
       <Route
         path="/cart"
         element={

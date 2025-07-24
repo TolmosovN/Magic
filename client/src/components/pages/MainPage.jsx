@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import MTGCard from '../ui/MTGCard';
 import SearchForm from '../ui/SearchForm';
 
-export default function MainPage({mtgcards, setMtgcards}) {
+export default function MainPage({mtgcards, addToCart, setMtgcards}) {
 
   useEffect(() => {
     axios("/api/cards")
