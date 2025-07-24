@@ -9,33 +9,38 @@ class AuthController {
   static async signup(req, res) {
     try {
       const { name, email, password, city } = req.body;
-      const user = await AuthService.signup({ name, email, password, city });
-      const { refreshToken } = generateTokens({ user });
+      const { user, accessToken, refreshToken } = await AuthService.signup({
+        name,
+        email,
+        password,
+        city,
+      });
+
       res
-        .cookie('refreshToken', refreshToken, {
-          maxAge: jwtConfig.refresh.expiresIn,
-          httpOnly: true,
-        })
-        .json({ user });
+        .status(201)
+
+        .cookie('refreshToken', refreshToken, cookieConfig.refresh)
+        .json({ user, accessToken });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: error.message });
     }
   }
 
-  static async signin(req, res){
-try {
-      const { password, email} = req.body;
-      if(!email || !password) return res.status(400).json('Поля не заполнены')
-      const {user, accessToken, refreshToken} = await AuthService.signin(email, password)
-      res.cookie('refreshToken', refreshToken, cookieConfig.refresh)
-      .json({user, accessToken})
-} catch (error) {
-  return res.status(400).json({error: error.message})
-  
-}
-
-
+  static async signin(req, res) {
+    try {
+      const { password, email } = req.body;
+      if (!email || !password) return res.status(400).json('Поля не заполнены');
+      const { user, accessToken, refreshToken } = await AuthService.signin(
+        email,
+        password,
+      );
+      res
+        .cookie('refreshToken', refreshToken, cookieConfig.refresh)
+        .json({ user, accessToken });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
   }
 
   static refresh(req, res) {
