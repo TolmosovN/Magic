@@ -38,7 +38,7 @@ function App() {
         path="/search"/>
           
         
-        {/* <Route path="/" element={<MainPage />} /> */}
+        { <Route path="/" element={<MainPage />} /> }
       </Route>
     </Routes>
   );
