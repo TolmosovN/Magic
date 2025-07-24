@@ -4,10 +4,13 @@ import Layout from "./components/pages/Layout";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
-import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
+// import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import ProfilePage from "./components/pages/ProfilePage";
+import CartPage from "./components/pages/CartPage1";
+import ProtectedRoute from "./components/HOCs/ProtectedRoute";
+
 
 import axios from "axios";
 function App() {
@@ -16,6 +19,7 @@ function App() {
 
   const [accessToken, setAccessToken] = useState("");
     const [mtgcards, setMtgcards] = useState([]);
+ 
 
   useEffect(() => {
     axios("/api/cards")
@@ -24,22 +28,24 @@ function App() {
   }, []);
   const navigate = useNavigate();
 
-    useEffect(() => {
-      axiosInstance
-        .post("/auth/refresh")
-        .then(({ data }) => setUser(data.user))
-        .catch(console.error)
-        // .finally(() => setLoading(false));
-    }, []);
+  useEffect(() => {
+    axiosInstance
+      .post("/auth/refresh")
+      .then(({ data }) => setUser(data.user))
+      .catch(console.error);
+  }, []);
 
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
+    navigate("/");
   };
-    const handleLogin = async (formData) => {
-      const response = await axiosInstance.post("/auth/signin", formData);
-      setUser(response.data.user);
-    };
+
+  const handleLogin = async (formData) => {
+    const response = await axiosInstance.post("/auth/signin", formData);
+    setUser(response.data.user);
+    navigate("/");
+  };
 
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
@@ -70,33 +76,62 @@ function App() {
     setMtgcards([...mtgcards, res.data]);
     navigate("/profile");
   };
+  
+
+
 
   return (
-  <Routes>
-    <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-      <Route path="/" element={<MainPage addToCart={addToCart} mtgcards={mtgcards} setMtgcards={setMtgcards}/>} />
-      <Route path="/profile" element={<ProfilePage user={user} submitHandler={submitHandler} mtgcards={mtgcards} />} />
+    <Routes>
       <Route
-        path="/cart"
         element={
-          <CartPage
-            cart={cart}
-            removeFromCart={removeFromCart}
-            onOrderComplete={onOrderComplete}
-          />
+          <Layout user={user} logoutHandler={logoutHandler} cart={cart} />
         }
-      />
-      <Route
-        path="/signup"
-        element={<SignupPage signupHandler={signupHandler} />}
-      />
-      <Route
-        path="/signin"
-        element={<SignInPage handleLogin={handleLogin} />}
-      />
-    </Route>
-  </Routes>
-);
+      >
+        <Route
+          path="/"
+          element={
+            <MainPage
+              addToCart={addToCart}
+              mtgcards={mtgcards}
+              setMtgcards={setMtgcards}
+            />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProfilePage
+              user={user}
+              submitHandler={submitHandler}
+              mtgcards={mtgcards}
+            />
+          }
+        />
+        <Route
+          element={<ProtectedRoute isAllowed={!!user} redirectTo="/signin" />}
+        >
+          <Route
+            path="/cart"
+            element={
+              <CartPage
+                cart={cart}
+                removeFromCart={removeFromCart}
+                onOrderComplete={onOrderComplete}
+              />
+            }
+          />
+        </Route>
+        <Route
+          path="/signup"
+          element={<SignupPage signupHandler={signupHandler} />}
+        />
+        <Route
+          path="/signin"
+          element={<SignInPage handleLogin={handleLogin} />}
+        />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

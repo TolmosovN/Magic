@@ -2,19 +2,24 @@ import React from "react";
 import NavBar from "../ui/Navbar";
 import { Outlet } from "react-router";
 import Container from "react-bootstrap/esm/Container";
+import NavbarComponent from "../ui/Navbar";
 
-export default function Layout({ user, logoutHandler }) {
+export default function Layout({ user, logoutHandler, cart }) {
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <header>
-        <NavBar user={user} logoutHandler={logoutHandler} />
+        <NavbarComponent
+          user={user}
+          logoutHandler={logoutHandler}
+          cart={cart}
+        />
       </header>
       <Container style={{ flexGrow: 1, marginTop: "2rem" }}>
         <Outlet />
       </Container>
-      <footer>c Elbrus</footer>
+      <footer>© Elbrus Bootcamp</footer>
     </div>
   );
 }
