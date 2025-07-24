@@ -8,4 +8,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const cardRouter = require('./routes/cardRouter');
+
+app.use('/api/', cardRouter);
+
 module.exports = app;
