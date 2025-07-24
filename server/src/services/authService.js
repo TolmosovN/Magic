@@ -4,25 +4,21 @@ const generateTokens = require('../utils/generateTokens');
 
 class AuthService {
   static async signup({ email, password, name, city }) {
-    const [user, isCreated] = await User.findOrCreate({
-      where: { email },
-      defaults: { password: await bcrypt.hash(password, 10), name, city },
-    });
-
-    // Проверка пароля
-    // const isCorrect = await bcrypt.compare(password, user.hashpass);
-
-    if (!isCreated) {
-      throw new Error('User already exists');
-    }
+    if(!email || ! name || !password || !city) throw new Error('Не хватает данных')
+    
+    const userExisting = await User.findOne({ where: { email } });
+    if (userExisting) throw new Error('User уже существует');
+    const truePassword = await bcrypt.hashSync(password, 10);
+    const user = await User.create({email, name, password: truePassword, city})
     const plainUser = user.get();
     delete plainUser.password;
-    return plainUser;
+    const { accessToken, refreshToken } = generateTokens({ user: plainUser });
+    return { user: plainUser, accessToken, refreshToken };
   }
 
   static async signin(email, password) {
     const userExisting = await User.findOne({ where: { email } });
-    if (userExisting) throw new Error('User уже существует');
+    if (!userExisting) throw new Error('User не существует');
     const truePassword = await bcrypt.compare(password, userExisting.password);
     if (!truePassword) throw new Error('Пароль не правильный');
     const plainUser = userExisting.get();
