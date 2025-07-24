@@ -23,17 +23,19 @@ function App() {
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
+    navigate("/");
   };
   const handleLogin = async (formData) => {
     const response = await axiosInstance.post("/auth/signin", formData);
     setUser(response.data.user);
+    navigate("/");
   };
   
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
     setUser(null);
   };
-console.log(user)
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
