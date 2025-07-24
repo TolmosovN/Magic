@@ -4,6 +4,6 @@ const verifyAccessToken = require('../middlewares/verifyAccessToken');
 const cardRouter = require('express').Router();
 
 cardRouter.get('/', CardController.getAllCards);
-cardRouter.post('/card', verifyAccessToken, CardController.createCard);
+cardRouter.post('/', verifyAccessToken, CardController.createCard);
 
 module.exports = cardRouter

@@ -27,14 +27,8 @@ import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import Card from "../ui/Card"; // твой компонент карточки
 
-export default function MainPage() {
-  const [mtgcards, setMtgcards] = useState([]);
+export default function MainPage({mtgcards}) {
 
-  useEffect(() => {
-    axios("/api/")
-      .then(({ data }) => setMtgcards(data))
-      .catch(console.error);
-  }, []);
 
   return (
     <Container className="my-4">

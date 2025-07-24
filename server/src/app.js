@@ -12,7 +12,7 @@ app.use(express.json());
 
 const cardRouter = require('./routes/cardRouter');
 
-app.use('/api/', cardRouter);
+app.use('/api/cards', cardRouter);
 
 app.use('/api/auth', authRouter);
 
