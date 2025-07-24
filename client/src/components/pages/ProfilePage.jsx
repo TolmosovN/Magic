@@ -24,7 +24,7 @@ import {
   Plus,
   Trash,
   Upload
-} from 'react-bootstrap-icons'
+} from 'react-bootstrap-icons';
 import  { useState } from 'react';
 export default function ProfilePage({user}) {
 
