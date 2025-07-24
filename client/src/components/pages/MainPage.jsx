@@ -7,7 +7,7 @@ export default function MainPage({ addToCart }) {
   const [mtgcards, setMtgcards] = useState([]);
 
   useEffect(() => {
-    axios("/api/")
+    axios("/api/cards")
       .then(({ data }) => setMtgcards(data))
       .catch(console.error);
   }, []);

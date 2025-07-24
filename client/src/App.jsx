@@ -1,13 +1,14 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 
-import Layout from "./components/pages/Layout1";
+import Layout from "./components/pages/Layout";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
 import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
-import { useState } from "react";
-import MainPage from "./components/pages/MainPage";
+import { useEffect, useState } from "react";
+import ProfilePage from "./components/pages/ProfilePage";
+
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
@@ -61,27 +62,31 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-        <Route path="/profile" element={<ProfilePage user={user} />} />
-        {/* <Route path="/cart" element={<CartPage />} /> */}
-        <Route
-          path="/signup"
-          element={<SignupPage signupHandler={signupHandler} />}
-        />
-        <Route
-          path="/signin"
-          element={<SignInPage handleLogin={handleLogin} />}
-        />
-        {/* <Route path="/" element={<MainPage />} /> */}
-      </Route>
-    </Routes>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  <Routes>
+    <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
+      <Route path="/" element={<MainPage addToCart={addToCart}/>} />
+      <Route path="/profile" element={<ProfilePage user={user} />} />
+      <Route
+        path="/cart"
+        element={
+          <CartPage
+            cart={cart}
+            removeFromCart={removeFromCart}
+            onOrderComplete={onOrderComplete}
+          />
+        }
+      />
+      <Route
+        path="/signup"
+        element={<SignupPage signupHandler={signupHandler} />}
+      />
+      <Route
+        path="/signin"
+        element={<SignInPage handleLogin={handleLogin} />}
+      />
+    </Route>
+  </Routes>
+);
 }
 
 export default App;

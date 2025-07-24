@@ -1,77 +1,80 @@
-
-import React from 'react'
-import { 
-  Container, 
-  Tab, 
-  Tabs, 
-  Card, 
-  Button, 
-  Form, 
-  Row, 
-  Col, 
+import React from "react";
+import {
+  Container,
+  Tab,
+  Tabs,
+  Card,
+  Button,
+  Form,
+  Row,
+  Col,
   Badge,
   Image,
   ListGroup,
   InputGroup,
-  FormControl
-} from 'react-bootstrap';
+  FormControl,
+} from "react-bootstrap";
 import {
-  Person, 
-  Box, 
-  Bag, 
+  Person,
+  Box,
+  Bag,
   Gear,
   Pencil,
   Plus,
   Trash,
-  Upload
-} from 'react-bootstrap-icons'
-import  { useState } from 'react';
-export default function ProfilePage({user}) {
-
-  
-  const [activeTab, setActiveTab] = useState('overview');
+  Upload,
+} from "react-bootstrap-icons";
+import { useState } from "react";
+export default function ProfilePage({ user }) {
+  const [activeTab, setActiveTab] = useState("overview");
   const [isEditing, setIsEditing] = useState(false);
   const [showAddCard, setShowAddCard] = useState(false);
 
   // Mock data
   const mockUser = {
-    name: 'Иван Иванов',
-    email: 'ivan@example.com',
-    phone: '+7 (999) 123-45-67',
-    city: 'Москва',
+    name: "Иван Иванов",
+    email: "ivan@example.com",
+    phone: "+7 (999) 123-45-67",
+    city: "Москва",
     totalSales: 42,
     totalPurchases: 15,
-    rating: 4.8
+    rating: 4.8,
   };
 
   const mockSellerCards = [
     {
       id: 1,
-      name: 'Black Lotus',
+      name: "Black Lotus",
       price: 25000,
-      status: 'Продается',
+      status: "Продается",
       views: 128,
-      image: 'https://cards.scryfall.io/large/front/0/c/0c082aa8-bf7f-47f2-baf8-43ad253fd7d7.jpg'
+      image:
+        "https://cards.scryfall.io/large/front/0/c/0c082aa8-bf7f-47f2-baf8-43ad253fd7d7.jpg",
     },
     {
       id: 2,
-      name: 'Mox Pearl',
+      name: "Mox Pearl",
       price: 18000,
-      status: 'Продано',
+      status: "Продано",
       views: 95,
-      image: 'https://cards.scryfall.io/large/front/3/b/3b0c5b5c-2a1e-4e6d-b5e1-9b58b3a5e5d1.jpg'
-    }
+      image:
+        "https://cards.scryfall.io/large/front/3/b/3b0c5b5c-2a1e-4e6d-b5e1-9b58b3a5e5d1.jpg",
+    },
   ];
 
-  const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург'];
-  const conditions = ['NM', 'SP', 'MP', 'HP', 'D'];
+  const cities = ["Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург"];
+  const conditions = ["NM", "SP", "MP", "HP", "D"];
 
   const getStatusColor = (status) => {
-    switch(status) {
-      case 'Продается': return 'success';
-      case 'Продано': return 'secondary';
-      case 'Забронировано': return 'warning';
-      default: return 'primary';
+    switch (status) {
+      case "Продается":
+        return "success";
+      case "Продано":
+        return "secondary";
+      case "Забронировано":
+        return "warning";
+      default:
+        return "primary";
     }
   };
 
@@ -80,9 +83,7 @@ export default function ProfilePage({user}) {
       {/* Header */}
       <div className="mb-4">
         <h1 className="mb-2">Личный кабинет</h1>
-        <p className="text-muted">
-          Управляйте своим профилем и товарами
-        </p>
+        <p className="text-muted">Управляйте своим профилем и товарами</p>
       </div>
 
       <Tabs
@@ -90,9 +91,14 @@ export default function ProfilePage({user}) {
         onSelect={(k) => setActiveTab(k)}
         className="mb-4"
       >
-        <Tab eventKey="overview" title={
-          <span><Person className="me-1" /> Обзор</span>
-        }>
+        <Tab
+          eventKey="overview"
+          title={
+            <span>
+              <Person className="me-1" /> Обзор
+            </span>
+          }
+        >
           <Row className="g-3 mb-4">
             <Col md={6} lg={3}>
               <Card className="h-100">
@@ -169,7 +175,7 @@ export default function ProfilePage({user}) {
                 onClick={() => setIsEditing(!isEditing)}
               >
                 <Pencil className="me-1" />
-                {isEditing ? 'Сохранить' : 'Редактировать'}
+                {isEditing ? "Сохранить" : "Редактировать"}
               </Button>
             </Card.Header>
             <Card.Body>
@@ -177,7 +183,7 @@ export default function ProfilePage({user}) {
                 <Col md={6}>
                   <Form.Group>
                     <Form.Label>Имя</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                       value={user?.name}
                       disabled={!isEditing}
                       readOnly={!isEditing}
@@ -187,7 +193,7 @@ export default function ProfilePage({user}) {
                 <Col md={6}>
                   <Form.Group>
                     <Form.Label>Email</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                       value={user?.email}
                       disabled={!isEditing}
                       readOnly={!isEditing}
@@ -197,7 +203,7 @@ export default function ProfilePage({user}) {
                 <Col md={6}>
                   <Form.Group>
                     <Form.Label>Телефон</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                       value={mockUser.phone}
                       disabled={!isEditing}
                       readOnly={!isEditing}
@@ -209,8 +215,10 @@ export default function ProfilePage({user}) {
                     <Form.Label>Город</Form.Label>
                     <Form.Select disabled={!isEditing}>
                       <option>{user?.city}</option>
-                      {cities.map(city => (
-                        <option key={city} value={city}>{city}</option>
+                      {cities.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
                       ))}
                     </Form.Select>
                   </Form.Group>
@@ -220,9 +228,14 @@ export default function ProfilePage({user}) {
           </Card>
         </Tab>
 
-        <Tab eventKey="my-cards" title={
-          <span><Box className="me-1" /> Мои карты</span>
-        }>
+        <Tab
+          eventKey="my-cards"
+          title={
+            <span>
+              <Box className="me-1" /> Мои карты
+            </span>
+          }
+        >
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
               <Card.Title className="mb-0">Мои карты</Card.Title>
@@ -233,12 +246,12 @@ export default function ProfilePage({user}) {
             </Card.Header>
             <Card.Body>
               <Row className="g-3">
-                {mockSellerCards.map(card => (
+                {mockSellerCards.map((card) => (
                   <Col md={6} lg={4} key={card.id}>
                     <Card className="h-100">
                       <div className="ratio ratio-1x1 bg-light p-2">
-                        <Image 
-                          src={card.image} 
+                        <Image
+                          src={card.image}
                           alt={card.name}
                           className="object-fit-contain"
                         />
@@ -257,7 +270,10 @@ export default function ProfilePage({user}) {
                           Просмотров: {card.views}
                         </p>
                         <div className="d-grid gap-2 d-sm-flex">
-                          <Button variant="outline-primary" className="flex-grow-1">
+                          <Button
+                            variant="outline-primary"
+                            className="flex-grow-1"
+                          >
                             <Pencil className="me-1" />
                             Изменить
                           </Button>
@@ -299,8 +315,10 @@ export default function ProfilePage({user}) {
                         <Form.Label>Состояние</Form.Label>
                         <Form.Select>
                           <option>Выберите состояние</option>
-                          {conditions.map(condition => (
-                            <option key={condition} value={condition}>{condition}</option>
+                          {conditions.map((condition) => (
+                            <option key={condition} value={condition}>
+                              {condition}
+                            </option>
                           ))}
                         </Form.Select>
                       </Form.Group>
@@ -319,11 +337,15 @@ export default function ProfilePage({user}) {
                   </Row>
                   <Form.Group className="mb-3">
                     <Form.Label>Описание (опционально)</Form.Label>
-                    <Form.Control as="textarea" rows={3} placeholder="Дополнительная информация о карте..." />
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      placeholder="Дополнительная информация о карте..."
+                    />
                   </Form.Group>
                   <div className="d-flex gap-2">
                     <Button className="flex-grow-1">Добавить карту</Button>
-                    <Button 
+                    <Button
                       variant="outline-secondary"
                       onClick={() => setShowAddCard(false)}
                     >
@@ -336,9 +358,14 @@ export default function ProfilePage({user}) {
           )}
         </Tab>
 
-        <Tab eventKey="orders" title={
-          <span><Bag className="me-1" /> Заказы</span>
-        }>
+        <Tab
+          eventKey="orders"
+          title={
+            <span>
+              <Bag className="me-1" /> Заказы
+            </span>
+          }
+        >
           <Card>
             <Card.Header>
               <Card.Title>История заказов</Card.Title>
@@ -353,9 +380,14 @@ export default function ProfilePage({user}) {
           </Card>
         </Tab>
 
-        <Tab eventKey="settings" title={
-          <span><Gear className="me-1" /> Настройки</span>
-        }>
+        <Tab
+          eventKey="settings"
+          title={
+            <span>
+              <Gear className="me-1" /> Настройки
+            </span>
+          }
+        >
           <Card>
             <Card.Header>
               <Card.Title>Настройки аккаунта</Card.Title>
