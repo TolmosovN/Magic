@@ -9,6 +9,7 @@ export default function SignupPage({ signupHandler }) {
     password: "",
     city: "",
   });
+  
 
   return (
     <Container>

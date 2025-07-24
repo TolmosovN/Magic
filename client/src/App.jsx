@@ -1,26 +1,37 @@
 import { Route, Routes } from "react-router";
-import { useState } from "react";
 
-import Layout from "./components/Layout";
+import Layout from "./components/pages/Layout1";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
 import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
-
+import { useState } from "react";
+import MainPage from "./components/pages/MainPage";
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
+
+  const [accessToken, setAccessToken] = useState("");
+  const [cards, setCards] = useState([]);
+  const navigate = useNavigate();
+
+    useEffect(() => {
+      axiosInstance
+        .post("/auth/refresh")
+        .then(({ data }) => setUser(data.user))
+        .catch(console.error)
+        // .finally(() => setLoading(false));
+    }, []);
 
   const signupHandler = async (formData) => {
     const response = await axiosInstance.post("/auth/signup", formData);
     setUser(response.data.user);
   };
-
-  const handleLogin = async (formData) => {
-    const response = await axiosInstance.post("/auth/signin", formData);
-    setUser(response.data.user);
-  };
+    const handleLogin = async (formData) => {
+      const response = await axiosInstance.post("/auth/signin", formData);
+      setUser(response.data.user);
+    };
 
   const logoutHandler = async () => {
     await axiosInstance.delete("/auth/signout");
@@ -35,13 +46,25 @@ function App() {
     setCart([]);
   };
 
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    const userIdData = { ...data, userId: user.id };
+    const res = await axiosInstance.post("/cards", userIdData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    setCards([...cards, res.data]);
+    navigate("/profile");
+  };
+
   return (
     <Routes>
-      <Route
-        element={
-          <Layout user={user} logoutHandler={logoutHandler} cart={cart} />
-        }
-      >
+      <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
+        <Route path="/profile" element={<ProfilePage user={user} />} />
+        {/* <Route path="/cart" element={<CartPage />} /> */}
         <Route
           path="/signup"
           element={<SignupPage signupHandler={signupHandler} />}
@@ -50,19 +73,14 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        <Route path="/" element={<MainPage addToCart={addToCart} />} />
-        <Route
-          path="/cart"
-          element={
-            <CartPage
-              cart={cart}
-              removeFromCart={removeFromCart}
-              onOrderComplete={onOrderComplete}
-            />
-          }
-        />
+        {/* <Route path="/" element={<MainPage />} /> */}
       </Route>
     </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

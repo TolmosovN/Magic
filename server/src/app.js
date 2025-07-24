@@ -12,6 +12,14 @@ app.use(express.json());
 
 const cardRouter = require('./routes/cardRouter');
 
+
+const cartRouter = require("./cartRouter");
+const orderRouter = require("./orderRouter");
+
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
+
+
 app.use('/api/', cardRouter);
 
 app.use('/api/auth', authRouter);
