@@ -2,16 +2,31 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 
 export default function MTGCard({ mtgcard }) {
-  const { name, image_url, price, condition, isSold, User } = mtgcard;
+  const { name, image_url, price, condition, isSold, seller } = mtgcard;
 
   return (
     <Card style={{ width: "20rem", margin: "1rem" }}>
-      <Card.Img
-        variant="top"
-        src={image_url}
-        alt={name}
-        style={{ maxHeight: "300px", objectFit: "cover" }}
-      />
+      <div
+        style={{
+          width: "100%",
+          height: "300px",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src={image_url}
+          alt={name}
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain",
+            transform: "scale(0.67)",
+          }}
+        />
+      </div>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
 
@@ -24,7 +39,7 @@ export default function MTGCard({ mtgcard }) {
         </Card.Text>
 
         <Card.Text>
-          <strong>Город:</strong> {User.city}
+          <strong>Город:</strong> {seller.city}
         </Card.Text>
 
         {isSold ? (

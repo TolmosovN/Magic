@@ -5,6 +5,7 @@ class CardsService {
     return Card.findAll({
       include: {
         model: User,
+        as: 'seller', 
         attributes: ['city'],
       },
     });

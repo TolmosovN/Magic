@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 
-import Layout from "./components/pages/Layout1";
+import Layout from "./components/колинлайоут";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import axiosInstance from "./service/axiosInstance";
@@ -34,7 +34,7 @@ function App() {
           path="/signin"
           element={<SignInPage handleLogin={handleLogin} />}
         />
-        {/* <Route path="/" element={<MainPage />} /> */}
+        <Route path="/" element={<MainPage />} />
       </Route>
     </Routes>
   );
