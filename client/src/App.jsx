@@ -50,7 +50,9 @@ function App() {
     setUser(null);
   };
 
-  const addToCart = (item) => setCart((prev) => [...prev, item]);
+  const addToCart = async (item) => {
+    setCart((prev) => [...prev, item]);
+  };
   const removeFromCart = (id) =>
     setCart((prev) => prev.filter((item) => item.id !== id));
 
@@ -78,7 +80,7 @@ function App() {
     <Routes>
       <Route
         element={
-          <Layout user={user} logoutHandler={logoutHandler} cart={cart} />
+          <Layout user={user} logoutHandler={logoutHandler} cart={cart} setMtgcards={setMtgcards} />
         }
       >
         <Route
@@ -113,6 +115,7 @@ function App() {
                 cart={cart}
                 removeFromCart={removeFromCart}
                 onOrderComplete={onOrderComplete}
+              setMtgcards={setMtgcards}
               />
             }
           />

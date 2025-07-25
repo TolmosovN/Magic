@@ -5,5 +5,5 @@ const cardRouter = require('express').Router();
 
 cardRouter.get('/', CardController.getAllCards);
 cardRouter.post('/', verifyAccessToken, CardController.createCard);
-
+cardRouter.put('/:id', verifyAccessToken, CardController.updateCard);
 module.exports = cardRouter

@@ -12,13 +12,13 @@ export default function MainPage({mtgcards, addToCart, setMtgcards}) {
     axios("/api/cards")
       .then(({ data }) => setMtgcards(data))
       .catch(console.error);
-  }, []);
+  }, [setMtgcards]);
 
   return (
     <Container className="my-4">
       <h1 className="mb-4">Каталог карт</h1>
       <Container style={{ marginBottom: "5px", border: "2px" }}>
-        <SearchForm />
+        <SearchForm  cards={mtgcards} setCards={setMtgcards} />
       </Container>
       <Container>
         <SearchBar setCards={setMtgcards} cards={mtgcards} />
