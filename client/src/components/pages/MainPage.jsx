@@ -18,7 +18,7 @@ export default function MainPage({mtgcards, addToCart, setMtgcards}) {
     <Container className="my-4">
       <h1 className="mb-4">Каталог карт</h1>
       <Container style={{ marginBottom: "5px", border: "2px" }}>
-        <SearchForm />
+        <SearchForm  cards={mtgcards} setCards={setMtgcards} />
       </Container>
       <Container>
         <SearchBar setCards={setMtgcards} cards={mtgcards} />

@@ -39,7 +39,7 @@ export default function MTGCard({ mtgcard, addToCart, setMtgcards }) {
             maxWidth: "100%",
             maxHeight: "100%",
             objectFit: "contain",
-            transform: "scale(0.85)",
+            transform: "scale(0.67)",
           }}
         />
       </div>

@@ -73,14 +73,7 @@ export default function ProfilePage({ user, submitHandler, mtgcards }) {
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
               <Card.Title className="mb-0">Информация о профиле</Card.Title>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={() => setIsEditing(!isEditing)}
-              >
-                <Pencil className="me-1" />
-                {isEditing ? "Сохранить" : "Редактировать"}
-              </Button>
+              
             </Card.Header>
             <Card.Body>
               <Row className="g-3">
@@ -203,8 +196,6 @@ export default function ProfilePage({ user, submitHandler, mtgcards }) {
                     <Button className="flex-grow-1" type="submit">
                       Добавить карту
                     </Button>
-                    <Button type="submit">Отмена</Button>
-                    <Button type="submit">Отмена</Button>
                   </div>
                 </Form>
               </Card.Body>
