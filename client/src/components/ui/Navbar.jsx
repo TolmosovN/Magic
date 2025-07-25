@@ -28,7 +28,7 @@ export default function NavbarComponent({ user, logoutHandler, cart }) {
           <Nav>
             {user ? (
               <>
-                <Navbar.Text className="me-3">Привет {user.name}!</Navbar.Text>
+                <Navbar.Text className="me-3">Привет, {user.name}!</Navbar.Text>
                 <Nav.Link as={Link} to="/cart">
                   Корзина ({cart?.length || 0}) {/* Показываем количество товаров */}
                 </Nav.Link>
