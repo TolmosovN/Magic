@@ -4,7 +4,6 @@ import Layout from "./components/pages/Layout";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
-// import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import ProfilePage from "./components/pages/ProfilePage";
@@ -12,13 +11,13 @@ import CartPage from "./components/pages/CartPage1";
 import ProtectedRoute from "./components/HOCs/ProtectedRoute";
 
 import axios from "axios";
+import ErrorPage from "./components/pages/ErrorPage";
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
 
   const [accessToken, setAccessToken] = useState("");
   const [mtgcards, setMtgcards] = useState([]);
-console.log(mtgcards);
 
   useEffect(() => {
     axios("/api/cards")
@@ -104,6 +103,7 @@ console.log(mtgcards);
             />
           }
         />
+        <Route path="/*" element={<ErrorPage />} />
         <Route
           element={<ProtectedRoute isAllowed={!!user} redirectTo="/signin" />}
         >
