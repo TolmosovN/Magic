@@ -93,6 +93,7 @@ function App() {
             />
           }
         />
+        <Route path='/*' element={<ErrorPage />}/>
         <Route
           path="/profile"
           element={
