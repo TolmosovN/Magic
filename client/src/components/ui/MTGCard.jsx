@@ -1,14 +1,24 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
+import axiosInstance from "../../service/axiosInstance";
 
-export default function MTGCard({ mtgcard, addToCart }) {
-  const { name, image_url, price, condition, isSold, seller } = mtgcard;
+export default function MTGCard({ mtgcard, addToCart, setMtgcards }) {
+  const {id, name, image_url, price, condition, isSold, seller } = mtgcard;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async() => {
+    try {
     if (!isSold && addToCart) {
       addToCart(mtgcard);
+      console.log(mtgcard);
+      const data = {...mtgcard, isSold: true};
+      const response = await axiosInstance.put(`/cards/${id}`, data);
+      console.log(response.data);}
+      
+    } catch (err) {
+      console.log(err);
     }
   };
+    
 
   return (
     <Card style={{ width: "20rem", margin: "1rem" }}>

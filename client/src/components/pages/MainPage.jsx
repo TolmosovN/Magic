@@ -10,7 +10,7 @@ export default function MainPage({mtgcards, addToCart, setMtgcards}) {
     axios("/api/cards")
       .then(({ data }) => setMtgcards(data))
       .catch(console.error);
-  }, []);
+  }, [setMtgcards]);
 
   return (
     <Container className="my-4">
