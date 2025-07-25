@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/HOCs/ProtectedRoute";
 
 
 import axios from "axios";
+import ErrorPage from "./components/pages/ErrorPage";
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
@@ -97,6 +98,7 @@ function App() {
             />
           }
         />
+        <Route path='/*' element={<ErrorPage />}/>
         <Route
           path="/profile"
           element={

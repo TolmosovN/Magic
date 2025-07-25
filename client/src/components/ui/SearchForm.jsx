@@ -22,7 +22,7 @@ export default function SearchForm({ cards = [], setCards }) {
         .filter(city => city != null && city.trim() !== '')
     )].sort();
     setAvailableCities(cities);
-  }, [cards]);
+  }, []);
 
   const applyFilters = () => {
     let filteredCards = [...originalCards];
