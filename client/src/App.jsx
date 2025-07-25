@@ -4,22 +4,20 @@ import Layout from "./components/pages/Layout";
 import SignInPage from "./components/pages/SignInPage";
 import SignupPage from "./components/pages/SignupPage";
 import MainPage from "./components/pages/MainPage";
-// import CartPage from "./components/pages/CartPage"; // добавь страницу корзины
 import axiosInstance from "./service/axiosInstance";
 import { useEffect, useState } from "react";
 import ProfilePage from "./components/pages/ProfilePage";
 import CartPage from "./components/pages/CartPage1";
 import ProtectedRoute from "./components/HOCs/ProtectedRoute";
 
-
 import axios from "axios";
+import ErrorPage from "./components/pages/ErrorPage";
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
 
   const [accessToken, setAccessToken] = useState("");
-    const [mtgcards, setMtgcards] = useState([]);
- 
+  const [mtgcards, setMtgcards] = useState([]);
 
   useEffect(() => {
     axios("/api/cards")
@@ -60,13 +58,12 @@ function App() {
     setCart([]);
   };
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log('111');
-    
+    console.log("111");
+
     const data = Object.fromEntries(new FormData(e.target));
-    const userIdData = { ...data, userId: user.id , isSold: false};
+    const userIdData = { ...data, userId: user.id, isSold: false };
     const res = await axiosInstance.post("/cards", userIdData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -76,9 +73,6 @@ function App() {
     setMtgcards([...mtgcards, res.data]);
     navigate("/profile");
   };
-  
-
-
 
   return (
     <Routes>
@@ -107,6 +101,7 @@ function App() {
             />
           }
         />
+        <Route path="/*" element={<ErrorPage />} />
         <Route
           element={<ProtectedRoute isAllowed={!!user} redirectTo="/signin" />}
         >
